@@ -11,29 +11,44 @@
  */
 
 import java.util.Scanner;
+import javax.swing.*;
+import java.awt.*;
 
 public class TicTacToe
 {
     /** Board Markers **/
-    public static final String X_MARKER = "X";
-    public static final String O_MARKER = "O";
-    public static final String BLANK = "-";
+    public static final Image BLANK = new ImageIcon("Resources/Blank.png").getImage(),
+                            X_MARKER = new ImageIcon("Resources/X.png").getImage(),
+                            O_MARKER = new ImageIcon("Resources/O.png").getImage();
+
+
+    public static final int STARTING_X_PADDING = 110,
+                            STARTING_Y_PADDING = 115,
+                            SIDE_LENGTH = 50;
+
+    public static final int NUM_ROWS = 3,
+                            NUM_COLS = 3;
+
+    public static final int WINDOW_WIDTH = 350,
+                            WINDOW_HEIGHT = 400;
 
     /** Winning Directions **/
-    public static final int ROW_WIN = 1;
-    public static final int COL_WIN = 2;
-    public static final int DIAGONAL_RIGHT_WIN = 3;
-    public static final int DIAGONAL_LEFT_WIN = 4;
+    public static final int ROW_WIN = 1,
+                            COL_WIN = 2;
+    public static final int DIAGONAL_RIGHT_WIN = 3,
+                            DIAGONAL_LEFT_WIN = 4;
 
     /** Winning Stats **/
-    private String winner;      // Provides the marker of the winner
+    private Image winner;      // Provides the marker of the winner
     private int winDirection;   // Provides the direction of the win
                                 // following the win direction final variables above
     private int winIndex;       // Provides the index of the row/col of the win
     private int turn;
 
+    private TicTacToeViewer window;
     private Square[][] board;
     private boolean isGameOver;
+
 
     /**
      * Constructor which initialized the board with BLANKs.
@@ -43,12 +58,16 @@ public class TicTacToe
      */
     public TicTacToe() {
         // Initialize Squares in the board
-        this.board = new Square[3][3];
+
+        this.board = new Square[NUM_ROWS][NUM_COLS];
         for(int row = 0; row < this.board.length; row++) {
             for(int col = 0; col< this.board[row].length; col++) {
-                this.board[row][col] = new Square(row, col);
+                this.board[row][col] = new Square(col*SIDE_LENGTH + STARTING_X_PADDING, row*SIDE_LENGTH + STARTING_Y_PADDING);
             }
         }
+        this.window = new TicTacToeViewer(this);
+
+
 
         // Initialize winning stats variables
         this.isGameOver = false;
@@ -63,7 +82,7 @@ public class TicTacToe
         return this.board;
     }
 
-    public String getWinner() {
+    public Image getWinner() {
         return this.winner;
     }
 
@@ -110,6 +129,7 @@ public class TicTacToe
         // Loop until there is a winner or no more turns
         while(!this.checkWin() && this.checkTurn()) {
             this.printBoard();
+            window.repaint();
             System.out.println("Enter your Row Pick:" );
             int row = input.nextInt();
             System.out.println("Enter your Col Pick:" );
@@ -122,6 +142,7 @@ public class TicTacToe
         }
 
         this.printBoard();
+        window.repaint();
         this.isGameOver = true;
 
         // Determine if there was a winner
@@ -191,7 +212,6 @@ public class TicTacToe
             this.winDirection = diag;
             return true;
         }
-
         return false;
     }
 

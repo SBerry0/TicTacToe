@@ -9,34 +9,35 @@
  * @author: Nandhini Namasivayam
  * @version: Jan 2023
  */
-
+import javax.swing.*;
+import java.awt.*;
 public class Square {
 
-    private String marker;
-    private int row;
-    private int col;
+    private Image marker;
+    private int x;
+    private int y;
     private boolean isWinningSquare;
 
     /**
      * Constructor to initialize one Square of the
      * TicTacToe board
-     * @param row the row the square is in
-     * @param col the column the square is in
+     * @param x the row the square is in
+     * @param y the column the square is in
      */
-    public Square(int row, int col) {
-        this.row = row;
-        this.col = col;
+    public Square(int x, int y) {
+        this.x = x;
+        this.y = y;
 
         this.marker = TicTacToe.BLANK;
         this.isWinningSquare = false;
     }
 
     /******************** Getters and Setters ********************/
-    public String getMarker() {
+    public Image getMarker() {
         return this.marker;
     }
 
-    public void setMarker(String marker) {
+    public void setMarker(Image marker) {
         this.marker = marker;
     }
 
@@ -52,10 +53,21 @@ public class Square {
         return this.marker.equals(TicTacToe.BLANK);
     }
 
+
+    public void draw(Graphics g, TicTacToeViewer window) {
+        g.setColor(Color.black);
+        g.drawRect(x, y, TicTacToe.SIDE_LENGTH, TicTacToe.SIDE_LENGTH);
+        if (isWinningSquare) {
+            g.setColor(Color.GREEN);
+            g.fillRect(x, y, TicTacToe.SIDE_LENGTH, TicTacToe.SIDE_LENGTH);
+        }
+        g.drawImage(marker, x, y, TicTacToe.SIDE_LENGTH, TicTacToe.SIDE_LENGTH, window);
+    }
+
     /**
      * @return the marker for the square
      */
     public String toString() {
-        return this.marker;
+        return this.marker.toString();
     }
 }

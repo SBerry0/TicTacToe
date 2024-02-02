@@ -294,7 +294,7 @@ public class TicTacToe
         for(Square[] array : this.board) {
             System.out.print(row + " ");
             for(Square item : array) {
-                System.out.print(item + " ");
+                System.out.print(item.toString(window) + " ");
 
             }
             row++;

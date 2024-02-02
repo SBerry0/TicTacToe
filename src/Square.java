@@ -66,7 +66,7 @@ public class Square {
     /**
      * @return the marker for the square
      */
-    public String toString() {
-        return this.marker.toString();
+    public String toString(TicTacToeViewer window) {
+        return this.marker.getHeight(window) == 400 ? "O" : this.marker.getHeight(window) == 1000 ? "" : "X";
     }
 }

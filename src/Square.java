@@ -9,7 +9,6 @@
  * @author: Nandhini Namasivayam
  * @version: Jan 2023
  */
-import javax.swing.*;
 import java.awt.*;
 public class Square {
 
